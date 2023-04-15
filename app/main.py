@@ -9,7 +9,9 @@ def main():
         connection, address = server_socket.accept()  # wait for client
         try:
             data = connection.recv(1024).decode()
-            connection.send("+PONG\r\n".encode())
+            while data:
+                connection.send("+PONG\r\n".encode())
+                data = connection.recv(1024).decode()
         except ConnectionResetError:
             pass
 
